@@ -21,4 +21,4 @@ print(len(df))#Check new size of dataset after removeing null data
 #The columns were dropper first as to not drop any rows that contetn full information for what we are looking for
 
 #-------------------------------------Data Expolration------------------------------------------
-print(1)
+print(12312)
