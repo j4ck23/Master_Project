@@ -23,4 +23,4 @@ print(df)
 
 #The columns were dropper first as to not drop any rows that contetn full information for what we are looking for
 
-df.to_csv("Processed.csv")#Output to CSV for future use - Save on computational power.
+df.to_csv("Processed.csv", index=False)#Output to CSV for future use - Save on computational power.
