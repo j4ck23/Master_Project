@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+from scipy.stats import f_oneway
 
 
 #----------------------------------------Read Data in----------------------------------------
@@ -26,6 +27,12 @@ mean_winter = []
 mean_summer = []
 mean_monsoon = []
 mean_post_monsoon = []
+mean_2015 = []
+mean_2016 = []
+mean_2017 = []
+mean_2018 = []
+mean_2019 = []
+mean_2020 = []
 
 for i in range(len(cols)):
     means.append(df[cols[i]].mean())#Find mean
@@ -50,6 +57,16 @@ for i in range(len(mean_Season)):
     mean_post_monsoon.append(mean_Season[i][3])
 
 data = df[df.columns[2:8]]
+
+for i in range(len(cols)):
+    mean_2015.append(df.loc[df['Year'] == 2015, cols[i]].mean())
+    mean_2016.append(df.loc[df['Year'] == 2016, cols[i]].mean())
+    mean_2017.append(df.loc[df['Year'] == 2017, cols[i]].mean())
+    mean_2018.append(df.loc[df['Year'] == 2018, cols[i]].mean())
+    mean_2019.append(df.loc[df['Year'] == 2019, cols[i]].mean())
+    mean_2020.append(df.loc[df['Year'] == 2020, cols[i]].mean())
+
+print(f_oneway(mean_2015, mean_2016, mean_2017, mean_2018, mean_2019, mean_2020))
 
 plt.figure()
 plt.title("Average polluntant levels")
