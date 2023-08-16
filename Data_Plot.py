@@ -11,6 +11,7 @@ df = pd.read_csv("Processed.csv")
 #------------------------------------------Plotting------------------------------------------
 cols = ['PM2.5', 'PM10', 'NO2', 'CO', 'SO2', 'O3']
 years = ['2015', '2016', '2017', '2018', '2019', '2020']
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 Weekday = ['Weekday', 'Weekend']
 holiday = ['Holiday', 'Regular day']
 means = []
@@ -19,6 +20,7 @@ mean_week = {}
 mean_typeday = {}
 mean_Season = {}
 mean_time = {}
+mean_month = {}
 mean_weekday = []
 mean_weekend = []
 mean_regday = []
@@ -41,6 +43,7 @@ for i in range(len(cols)):
     mean_typeday[i] = df.groupby("Regular_day_or_holiday")[cols[i]].mean()
     mean_Season[i] = df.groupby("Season")[cols[i]].mean()
     mean_time[i] = df.groupby("Time")[cols[i]].mean()
+    mean_month[i] = df.groupby("Month")[cols[i]].mean()
 
 for i in range(len(mean_week)):
     mean_weekday.append(mean_week[i][0])
@@ -56,7 +59,7 @@ for i in range(len(mean_Season)):
     mean_monsoon.append(mean_Season[i][2])
     mean_post_monsoon.append(mean_Season[i][3])
 
-data = df[df.columns[2:8]]
+data = df[df.columns[2:9]]
 
 for i in range(len(cols)):
     mean_2015.append(df.loc[df['Year'] == 2015, cols[i]].mean())
@@ -136,6 +139,39 @@ plt.plot(np.arange(24), mean_time[4], label="SO2")
 plt.plot(np.arange(24), mean_time[5], label="O3")
 plt.legend()
 plt.show()
+
+
+fig, axs = plt.subplots(2, 4, sharex=True, sharey=True)
+plt.subplot(4,2,1)
+plt.title("PM2.5")
+plt.plot(months, mean_month[0], label="PM2.5")
+
+plt.subplot(4,2,2)
+plt.title("PM10")
+plt.plot(months, mean_month[1], label="PM10")
+
+plt.subplot(4,2,3)
+plt.title("NO2")
+plt.plot(months, mean_month[2], label="NO2")
+
+plt.subplot(4,2,4)
+plt.title("CO")
+plt.plot(months, mean_month[3], label="CO")
+
+plt.subplot(4,2,5)
+plt.title("SO2")
+plt.plot(months, mean_month[4], label="SO2")
+
+plt.subplot(4,2,6)
+plt.title("O3")
+plt.plot(months, mean_month[5], label="O3")
+
+plt.suptitle("Average polluntant levels over a year")
+plt.tight_layout()
+fig.supxlabel("Year")
+fig.supylabel("Levels")
+plt.show()
+
 
 plt.figure()
 heat_map = sns.heatmap(data.corr(), vmin=-1, vmax=1, annot=True)
