@@ -25,13 +25,13 @@ def pre_process(data, look_back = 1):
 
 #----------------------------------------Read Data in----------------------------------------
 df = pd.read_csv("Processed.csv",usecols=[2])
+df = df.sample(10000)
 data = df.values
 data = data.astype('float32')
 #--------------------------------------------Model-------------------------------------------
 scaler = MinMaxScaler(feature_range=(0, 1))
 data = scaler.fit_transform(data)
 X, y = pre_process(data)
-print(X.shape, y.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
@@ -47,8 +47,17 @@ testScore = np.sqrt(mean_squared_error(y_test, pred))
 print('MSE: ', (mean_squared_error(y_test,pred)))
 print('RMSE: ', (testScore))
 
+pred_transform = scaler.inverse_transform(pred)
+t = y_test.reshape(-1,1)
+te = pred_transform = scaler.inverse_transform(t)
+print(te)
+
 plt.figure()
 plt.plot(y_test)
 plt.plot(pred, color='r')
 plt.show()
-#model1 = load_model(model)
+
+plt.figure()
+plt.plot(te)
+plt.plot(pred_transform, color='r')
+plt.show()
